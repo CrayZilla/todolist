@@ -1,0 +1,397 @@
+body {
+	--BG: hsl(210, 11%, 15%);
+	background-color: var(--BG);
+	margin-top: 0;
+	margin-bottom: 0;
+
+	display: grid;
+	grid-template-rows: 8fr 1fr;
+	height: 100vh;
+}
+
+/* (fake) BODY */
+/* This is used to allow the footer to have some space */
+#main-body {
+	display: flex;
+	justify-content: center;
+	font-family: 'Inter', sans-serif;
+}
+
+.hidden {
+	display: none !important;
+}
+
+#TITLE { 
+	color: white;
+	font-weight: 700;
+
+	position: relative;
+	font-family: 'Ubuntu', sans-serif;
+	margin-block-start: 25px;
+	font-size: 3em;
+	letter-spacing: 1px;
+
+	transition:
+		font-size 250ms cubic-bezier(0.1, 0.2, 0.5, 1),
+		letter-spacing 250ms cubic-bezier(0.1, 0.2, 0.5, 1),
+		color 250ms cubic-bezier(0.1, 0.2, 0.5, 1);
+}
+
+#TITLE:hover {
+	font-size: 3.5em;
+	letter-spacing: 6px;
+	color: rgba(0,231,252,1);
+}
+
+
+/* SELECT TYPE */
+#selection {
+	display: flex;
+	justify-content: center;
+	gap: 50px;
+
+	margin-bottom: 20px;
+	width: 50%;
+}
+
+#selection input {
+	height: 80%;
+	opacity: 0.8;
+	transition:
+		opacity 250ms cubic-bezier(0.1, 0.2, 0.3, 1),
+		height 250ms cubic-bezier(0.1, 0.2, 0.3, 1);
+}
+
+#selection input:hover {
+	height: 100%;
+	opacity: 1;
+}
+
+#general {
+	justify-self: end;
+}
+
+
+
+
+/* FORM SUBMITTION */
+
+/* Task submittion form */
+form {
+	display: contents;
+}
+
+/* Task input textbox */
+.inputBox, .edit-task {
+	display: flex;
+	box-sizing: border-box;
+
+	position: relative;
+	width: 250px;
+
+	--box-sel: rgba(31, 185, 199, 0.8);
+	--box-desel: rgba(255,255,255,0.25);
+	--text-colour: #fff
+}
+
+.inputBox {
+	margin-bottom: 15px;
+}
+
+
+.inputBox input, .edit-task input {
+	width: 100%;
+	padding: 10px;
+	border: 1px solid var(--box-desel);
+	background: var(--BG);
+	border-radius: 5px;
+	outline: none;
+	color: var(--text-colour);
+	font-size: 1em;
+
+	transition: border 250ms cubic-bezier(0.1, 0.2, 0.3, 1);
+}
+
+.edit-task {
+	width: 100%;
+}
+
+.inputBox span {
+	position: absolute;
+	left: 0;
+	padding: 10px;
+	pointer-events: none;
+	font-size: 1em;
+	color: var(--box-desel);
+	text-transform: uppercase;
+}
+
+.inputBox input:valid ~ span,
+.inputBox input:focus ~ span {
+	color: var(--box-sel);
+	border-left: 1px solid var(--box-sel);
+	border-right: 1px solid var(--box-sel);
+
+	font-size: 0.65em;
+	font-weight: 800;
+	padding: 0 10px;
+	background: var(--BG);
+	letter-spacing: 0.2em;
+
+	transform: translateX(10px) translateY(-7px);
+	transition: 0.5s;
+}
+
+.inputBox input:valid,
+.inputBox input:focus,
+.edit-task input:focus {
+	border: 1px solid var(--box-sel);
+}
+
+/* Submit button */
+#submitTODO {
+	margin: 10px 0px;
+	height: 100px;
+	border-radius: 50%;
+	transition: height 250ms cubic-bezier(0.1, 0.2, 0.3, 1);
+}
+
+#shadow {
+	position: relative;
+	opacity: 0.5;
+	--glow-mult: 0.5;
+	z-index: -1;
+	--y-offset: -57px;
+  	box-shadow:
+    	0px var(--y-offset) calc(60px * var(--glow-mult)) calc(30px * var(--glow-mult)) #fff,  /* inner white */
+    	0px var(--y-offset) calc(100px * var(--glow-mult)) calc(60px * var(--glow-mult)) #f0f, /* middle magenta */
+    	0px var(--y-offset) calc(140px * var(--glow-mult)) calc(90px * var(--glow-mult)) #0ff; /* outer cyan */
+	transition: box-shadow 250ms cubic-bezier(0.1, 0.2, 0.3, 1);
+}
+
+#submitTODO:hover {
+	height: 120px;
+}
+
+#submitTODO:hover ~ #shadow {
+	--mult: 1.1;
+	--y-offset: -70px;
+	box-shadow:
+    	0px calc(var(--y-offset)) calc(60px * var(--mult) * var(--glow-mult)) calc(30px * var(--mult) * var(--glow-mult)) #fff,  /* inner white */
+    	0px calc(var(--y-offset)) calc(105px * var(--mult) * var(--glow-mult)) calc(65px * var(--mult) * var(--glow-mult)) #f0f, /* middle magenta */
+    	0px calc(var(--y-offset)) calc(140px * var(--mult) * var(--glow-mult)) calc(90px * var(--mult) * var(--glow-mult)) #0ff; /* outer cyan */
+}
+
+
+
+
+/* Applied when the checkbox is checked */
+.strikethrough {
+	text-decoration: line-through;
+}
+
+/* Center column-wise the whole website */
+.container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 50%;
+	/* height: 94vh; */
+}
+
+
+/* TASK DISPLAY */
+
+/* List of tasks */
+#todo {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+}
+
+/* Each Task */
+.task {
+	display: grid;
+	color: white;
+
+	/* BORDER */
+	border: 5px solid;
+  	border-image-slice: 1;
+	width: 50%;
+
+	--alpha: 0.8;
+	border-image-source: linear-gradient(180deg, rgba(132,245,255,var(--alpha)) 13%, rgba(0,231,252,var(--alpha)) 56%, rgba(0,160,252,var(--alpha)) 100%);
+
+	border-radius: 50%;
+	border-collapse: separate;
+
+	/* MARGIN & PADDING */
+	margin: 15px 0px;
+	padding: 10px 12px;
+	
+
+	/* FONT */
+	font-weight: 400;
+	font-size: 20px;
+	grid-template-columns: 30px auto 80px;
+	gap: 5px;
+
+	/* HOVER EFFECT */
+	transition:
+		padding 250ms cubic-bezier(0.1, 0.2, 0.3, 1),
+		grid-template-columns 250ms cubic-bezier(0.1, 0.2, 0.3, 1);
+	
+		container-type: inline-size;
+}
+
+.task:hover {
+	padding: 15px 10px;
+}
+
+/* TASK COMPONENTS (checkbox, content, delete button */
+.task > div, .edit-task > input {
+	display: flex;
+	align-content: center;		
+}
+
+/* Prevents text overflow for content, and centering error with delete */
+.task-content, .align-delete, .edit-task > input {
+	flex-wrap: wrap;
+	overflow-wrap: anywhere;
+}
+
+/* CHECKBOX */
+.checkbox {
+	size: 10px;
+}
+
+/* TASK OPTIONS */
+.options {
+	display: grid;
+	
+	flex-wrap: wrap;
+
+	justify-content: end;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 1fr;
+	gap: 5px;
+}
+
+.option {
+	justify-content: center;
+	border: 3px solid;
+  	border-image-slice: 1;
+	--alpha: 0.6;
+	border-image-source: linear-gradient(180deg, rgba(132,245,255,var(--alpha)) 13%, rgba(0,231,252,var(--alpha)) 56%, rgba(0,160,252,var(--alpha)) 100%);
+}
+
+/* EDIT (button */
+.edit {
+	padding: 2px;
+	width: 20px;
+	height: 20px;
+}
+
+/* DELETE TASKS (button) */
+.del-task {
+	display: flex;
+	width: 30px;
+	height: 30px;
+
+	background-color: rgba(132,245,255,0);
+	color: white;
+	font-weight: 400;
+	font-size: 20px;
+
+	transition:
+		border-image-source 250ms cubic-bezier(0.1, 0.2, 0.3, 1);
+}
+
+.option:hover {
+	cursor: pointer;
+
+	--alpha: 0.8;
+	border-image-source: linear-gradient(180deg, rgba(132,245,255,var(--alpha)) 13%, rgba(0,231,252,var(--alpha)) 56%, rgba(0,160,252,var(--alpha)) 100%);
+}
+
+task:has(> .del-task:hover)  {
+	padding: 10px 10px;
+}
+
+
+/* MOBILE-RESPONSIVE */
+@media (max-width: 992px) {
+	.container {
+		width: 100%;
+	}
+}
+
+@media (max-width: 768px) {
+	/* .container applied from prev. media query */
+	.task {
+		grid-template-columns: auto;
+		grid-template-areas: "a", "b", "c d";
+		gap: 20px;
+	}
+
+	.checkbox {
+		line-height: normal;
+		width: 15px;
+		height: 15px;
+	}
+
+	.task > div {
+		justify-content: center;
+	}
+
+	.options {
+		gap: 30px;
+	}
+
+	.option {
+		object-fit: contain;
+		width: calc(24% - 10.1px);
+	}
+
+	.del-task {
+		width: 24%;
+		padding-left: 14px;
+		padding-right: 14px;
+	}
+}
+
+
+/* FOOTER */
+#footer {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+
+}
+
+#footer > * {
+	font-family: 'Inter', sans-serif;
+	font-size: 14px;
+}
+
+#references {
+	display: flex;
+	flex-flow: column nowrap;
+	align-self: end;
+	align-items: end;
+
+	color: hsl(208, 12%, 22%);
+}
+
+#references a {
+	color: hsl(203, 11%, 24%);
+	text-decoration: none;
+}
+
+/* COPYRIGHT */
+#copyright {
+	display: flex;
+	align-items: end;
+
+	color: hsl(200, 9%, 32%);
+}

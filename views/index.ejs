@@ -1,0 +1,70 @@
+<%- include("alt/header.ejs") %>
+<body>
+	<div id="main-body">
+		<div class="container">
+			<h1 id="TITLE">TODOLIST</h1>
+			<div id="selection">
+				<form action="/switch" method="post">
+					<input id="general" type="image" src="assets/general.png">
+					<input type="hidden" name="MODE" value="general">
+				</form>
+				<form action="/switch" method="post">
+					<input id="work" type="image" src="assets/work.png">
+					<input type="hidden" name="MODE" value="work">
+				</form>
+			</div>
+			<!-- FORM -->
+			<form action="/new" method="post">
+				<div class="inputBox">
+					<input type="text" name="TASK" required>
+					<span>Add TODO</span>
+				</div>
+				
+				<input id="submitTODO" type="image" value="Submit" src="assets/add.png">
+				<div id="shadow"></div>
+			</form>
+
+			<!-- LIST -->
+			<div id="todo" class="work">
+				<% if (locals.todo) { %>
+					<% for (i = 0; i < todo.length; i++) { %>
+						<%# Makes the checkbox automatically checked %>
+						<% var checked = ""; %>
+						<% if (todo[i][1] == "X") {checked = "checked"} %>
+
+						<div class="task">
+
+							<div><input class="checkbox" type="checkbox" name="" <%= checked %>></div>
+
+							<div class="task-content"><%= todo[i][0] %></div>
+
+							<form class="hidden" action="/edit" method="post">
+								<div class="edit-task">
+									<input type="text" name="TASK" value="<%= todo[i][0] %>" required>
+									<input type="hidden" name="CHECKED" value="<%= todo[i][1] %>">
+									<input type="hidden" name="TASK_ID" value="<%= i %>">
+									<!-- Press ENTER to submit changes -->
+								</div>
+							</form>
+							
+							<div class="options">
+								<img class="edit option" src="assets/edit.png"></img>
+		
+								<form action="/delete" method="post">
+									<input type="hidden" name="TASK_ID" value="<%= i %>">
+									<button type="submit" class="option del-task">X</button>
+								</form>
+							</div>
+						</div>
+
+						
+					<% } %>
+				<% }  %>
+			</div>
+		</div>
+	</div>
+	<%- include("alt/footer.ejs") %>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script src="script.js"></script>
+</body>
+</html>
